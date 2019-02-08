@@ -1,0 +1,11 @@
+---
+- name: Ensure Spectacle prefs folder exists
+  file:
+    path: '~/Library/Application Support/Spectacle/'
+    state: directory
+
+- name: Copy Spectacle settings and shortcuts
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'files/spectacle/Shortcuts.json', dest: '~/Library/Application Support/Spectacle/Shortcuts.json' }
+    - { src: 'files/spectacle/com.divisiblebyzero.Spectacle.plist', dest: '~/Library/Preferences/com.divisiblebyzero.Spectacle.plist' }

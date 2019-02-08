@@ -1,0 +1,59 @@
+---
+- hosts: all
+  connection: local
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - ../config.yml
+        - config/NzdEQ0RERTYtMERDQy00MTZCLUFBMDItOEE4QjVFRDA3QzU4Cg==.config.yml
+      tags: ['always']
+
+  roles:
+    - role: geerlingguy.homebrew
+      tags: ['homebrew']
+    - role: geerlingguy.dotfiles
+      when: configure_dotfiles
+      tags: ['dotfiles']
+    - role: geerlingguy.mas
+      when: mas_installed_apps
+      tags: ['mas']
+
+  tasks:
+    - include: tasks/NEQ1ODVBQUItQUJERi00ODg1LTkwNjktMjk1MzY5MUNBMEQ1Cg==.yml
+
+    - include_tasks: tasks/ansible-setup.yml
+
+    - include_tasks: tasks/sudoers.yml
+      when: configure_sudoers
+
+    - include_tasks: tasks/terminal.yml
+      when: configure_terminal
+
+    - include_tasks: tasks/osx.yml
+      when: configure_osx
+      tags: ['osx']
+
+    - include_tasks: tasks/extra-packages.yml
+      tags: ['extra-packages']
+
+    - include_tasks: tasks/spectacle-prefs.yml
+      tags: ['spectacle']
+
+    - include_tasks: tasks/dock-items.yml
+      tags: ['dock']
+
+    - include: tasks/zsh.yml
+      tags: ['shell', 'zsh']
+
+    - include: tasks/fonts.yml
+      tags: ['fonts']
+
+    - name: Run configured post-provision ansible task files.
+      include_tasks: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
+      with_fileglob: "{{ post_provision_tasks|default(omit) }}"

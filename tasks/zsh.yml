@@ -1,0 +1,21 @@
+---
+- name: Remove old oh-my-zsh folder if exists
+  file:
+    path: '~/.oh-my-zsh'
+    state: absent
+
+- name: Clone oh-my-zsh repository
+  git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+    dest: '~/.oh-my-zsh'
+
+- name: Copy xxf theme to oh-my-zsh themes folder
+  copy:
+    src: 'files/zsh/xxf.zsh-theme'
+    dest: '~/.oh-my-zsh/themes/xxf.zsh-theme'
+
+- name: Set zsh as default shell
+  user:
+    name: "{{ lookup('env','USER') }}"
+    shell: /usr/local/bin/zsh
+  become: yes
