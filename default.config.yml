@@ -38,7 +38,7 @@ homebrew_installed_packages:
   - nmap
   - node
   - nvm
-  - php@7.2
+  - php@7.3
   - ssh-copy-id
   # - cowsay
   # - readline
@@ -48,7 +48,10 @@ homebrew_installed_packages:
   # - wrk
   - zsh
   - zsh-completions
-
+  
+homebrew_uninstalled_packages:
+  - php@7.2
+  
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
@@ -75,7 +78,7 @@ homebrew_cask_apps:
   - spectacle
   - spotify
   #- sublime-text
-  - teamviewer
+  #- teamviewer
   - telegram
   - the-unarchiver
   #- transmit
