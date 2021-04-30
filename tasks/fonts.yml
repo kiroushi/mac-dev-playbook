@@ -3,7 +3,16 @@
   unarchive:
     src: "https://fonts.google.com/download?family={{ item | replace(' ', '+') }}"
     dest: /Library/Fonts
-    remote_src: yes
+    remote_src: true
     exclude: '*.txt'
   with_items: '{{ fonts }}'
-  become: yes
+  become: true
+
+- name: Download JetBrains mono
+  unarchive:
+    src: "https://download.jetbrains.com/fonts/JetBrainsMono-2.225.zip"
+    dest: /Library/Fonts
+    remote_src: true
+    exclude: '*.txt'
+  become: true
+
